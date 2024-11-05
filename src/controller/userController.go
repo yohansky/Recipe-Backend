@@ -35,3 +35,39 @@ func GetUser(c *fiber.Ctx) error {
 	}
 	return c.JSON(user)
 }
+
+func UpdateUser(c *fiber.Ctx) error {
+	id, err := strconv.Atoi(c.Params("id"))
+
+	if err != nil {
+		return c.JSON(fiber.Map{
+			"Message": "Id tidak ditemukan",
+		})
+	}
+
+	var user models.User
+
+	user.Id = uint(id)
+
+	if err := c.BodyParser(&user); err != nil {
+		return err
+	}
+
+	config.DB.Model(&user).Updates(user)
+
+	return c.JSON(user)
+}
+
+func DeleteUser(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params("id"))
+
+	var user models.User
+
+	user.Id = uint(id)
+
+	config.DB.Delete(&user)
+
+	return c.JSON(fiber.Map{
+		"Message": "User Deleted",
+	})
+}
