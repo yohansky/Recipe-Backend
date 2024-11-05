@@ -1,0 +1,5 @@
+.env
+.vscode
+src/upload/*
+!src/upload/init.txt
+/credentials.json
