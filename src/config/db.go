@@ -11,8 +11,12 @@ import (
 var DB *gorm.DB
 
 func InitDB() {
-	url := os.Getenv(`postgres://PGUSER:PGPASSWORD@PGHOST:PGPORT/PGDATABASE?sslmode=require`)
 	var err error
+	// url := os.Getenv(`postgres://PGUSER:PGPASSWORD@PGHOST:PGPORT/PGDATABASE?sslmode=require`)
+	url := os.Getenv("DATABASE_URL")
+	if url == "" {
+		fmt.Println("DATABASE_URL is not set in the environment")
+	}
 	DB, err = gorm.Open(postgres.Open(url), &gorm.Config{})
 	if err != nil {
 		panic("Failed connect to Database")

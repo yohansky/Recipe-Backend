@@ -9,8 +9,8 @@ func Migrate() {
 	config.DB.AutoMigrate(
 		&models.User{},
 		&models.Comment{},
-		&models.Liker{},
+		&models.Liked_Recipe{},
 		&models.Recipe{},
-		&models.Saved{},
+		&models.Saved_Recipe{},
 	)
 }
